@@ -44,7 +44,40 @@ async function updateUser(req, res) {
   }
 }
 
+async function deleteUser(req, res) {
+  try {
+    const { id } = req.params;
+
+    await userService.deleteUser(id);
+
+    res.status(200).send({ message: "Deleted User!" });
+  } catch (error) {
+    res.status(500).send({
+      message: "Error deleting user!",
+      error: error.message,
+    });
+  }
+}
+
+async function getUserById(req, res) {
+  try {
+    const { id } = req.params;
+
+    const user = await userService.getUserById(id);
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).send({
+      message: "Error getting user By ID",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllUser,
   createUser,
+  updateUser,
+  deleteUser,
+  getUserById,
 };
